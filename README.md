@@ -1,4 +1,4 @@
-# 🧩 Entity Framework Core 8 - Database Replication (Read/Write Split)
+# 🧩 Entity Framework Core 8 - Database Replication (Read/Write)
 
 Este projeto demonstra como implementar **replicação de banco de dados (Read/Write Split)** utilizando **Entity Framework Core 8**.  
 A ideia é simples, mas poderosa:  
