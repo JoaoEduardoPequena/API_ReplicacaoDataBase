@@ -41,3 +41,7 @@ ConnectionStrings": {
     "Server=replica2.db;Database=AppDB;User Id=sa;Password=123;"
   ]
 }
+
+
+![Uploading image.png…]()
+
