@@ -43,6 +43,4 @@ ConnectionStrings": {
 }
 
 
-<img width="317" height="364" alt="Captura de ecrã 2025-10-27 172715" src="https://github.com/user-attachments/assets/af8769c5-ef53-4337-a7f8-4475dc8111ef" />
-
 
