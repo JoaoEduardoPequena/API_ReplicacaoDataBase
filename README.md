@@ -1,6 +1,6 @@
 # 🧩 Entity Framework Core 8 - Database Replication (Read/Write)
 
-Este projeto demonstra como implementar **replicação de banco de dados (Read/Write Split)** utilizando **Entity Framework Core 8**.  
+Este projeto demonstra como implementar **replicação de banco de dados (Read/Write)** utilizando **Entity Framework Core 8**.  
 A ideia é simples, mas poderosa:  
 👉 **Escrever no banco principal** e **ler nas réplicas**, melhorando a performance e a escalabilidade da aplicação.
 
