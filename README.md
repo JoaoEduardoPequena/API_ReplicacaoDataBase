@@ -1,50 +1,43 @@
-# 📬 API Message Pub/Sub com Redis e ASP.NET Core
+# 🧩 Entity Framework Core 8 - Database Replication (Read/Write Split)
 
-Este projecto demonstra um fluxo assíncrono de pedidos de restaurante usando **Redis Pub/Sub**, **ASP.NET Core 8**, **Clean Architecture** e **Background Services**.
-
----
-
-## 📌 Visão Geral
-
-Imagine o seguinte cenário:
-
-Um cliente realiza um pedido (nome, e-mail e descrição do pedido).  
-A API salva o pedido no banco de dados e publica uma mensagem no Redis.  
-Um serviço em segundo plano escuta esse canal e envia um e-mail de confirmação ao cliente — tudo de forma assíncrona e desacoplada.
+Este projeto demonstra como implementar **replicação de banco de dados (Read/Write Split)** utilizando **Entity Framework Core 8**.  
+A ideia é simples, mas poderosa:  
+👉 **Escrever no banco principal** e **ler nas réplicas**, melhorando a performance e a escalabilidade da aplicação.
 
 ---
 
-## 🔄 Fluxo de Funcionamento
+## 🚀 Objectivo
 
-1. **Cliente** envia `POST /api/pedidos`
-2. **API**:
-   - Salva o pedido no banco via EF Core
-   - Publica a mensagem no canal Redis `channel-pedido-novos`
-3. **NotificadorPedidos.Worker**:
-   - Escuta o canal Redis
-   - Ao receber a mensagem, envia um e-mail de confirmação ao cliente
+Muitos sistemas enfrentam gargalos de performance porque todas as operações (leitura e escrita) são direcionadas ao mesmo servidor.  
+Com **replicação de banco de dados** e o suporte do **EF Core 8**, podemos:
 
----
-
-## 🧠 Quando Usar Redis Pub/Sub?
-
-✅ Use quando:
-- Precisa de comunicação em tempo real
-- Não é necessário armazenar ou reprocessar mensagens
-- Deseja baixo acoplamento entre serviços
-
-❌ Evite quando:
-- Precisa de persistência ou confirmação de entrega
-- Precisa de reprocessamento ou tolerância a falhas  
-👉 Nesse caso, considere usar: **RabbitMQ**, **Kafka** ou **Azure Service Bus**
+- Reduzir a carga no servidor principal  
+- Aumentar a disponibilidade do sistema  
+- Melhorar o tempo de resposta das consultas  
+- Evitar downtime em cenários de alta demanda  
 
 ---
 
 ## ⚙️ Tecnologias Utilizadas
 
-- [ASP.NET Core 8]
-- Clean Architecture
-- [Redis](https://redis.io/) (Pub/Sub)
-- CQRS + MediatR
-- SQL Server + Entity Framework Core
-- BackgroundService com Redis Listener
+- [.NET 8](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [Entity Framework Core 8](https://learn.microsoft.com/en-us/ef/core/)
+- [SQL Server](https://www.microsoft.com/sql-server)
+- [Docker](https://www.docker.com/) (opcional, para subir bancos e ambiente local)
+- [Dependency Injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection)
+- [Configuration via appsettings.json](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/)
+
+---
+
+## 🧠 Conceito
+
+A ideia é separar os contextos de **leitura** e **escrita** dentro da aplicação, usando diferentes *connection strings*:
+
+```json
+ConnectionStrings": {
+  "PrimaryDatabase": "Server=primary.db;Database=AppDB;User Id=sa;Password=123;",
+  "ReadReplicas": [
+    "Server=replica1.db;Database=AppDB;User Id=sa;Password=123;",
+    "Server=replica2.db;Database=AppDB;User Id=sa;Password=123;"
+  ]
+}
